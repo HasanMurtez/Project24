@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BookItem = () => {
+const TopBooks = () => {
   return (
     <div>
       <h1>Home Page</h1>
@@ -9,4 +9,4 @@ const BookItem = () => {
   );
 };
 
-export default BookItem;
+export default TopBooks;
