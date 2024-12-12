@@ -26,17 +26,11 @@ const bookSchema = new mongoose.Schema({
     year: String,
     genre: String,
     poster: String,
-    rating: { type: Number, default: 0 },
-    isRead: { type: Boolean, default: false },
-    reviews: [{
-      text: String,
-      rating: { type: Number, min: 1, max: 5 }
-    }]
   });
   
   const Book = mongoose.model('Book', bookSchema);
   
-  // Add a new book
+  // Add a book
   app.post('/api/books', async (req, res) => {
     const { title, author, year, genre, poster } = req.body;
     try {
