@@ -21,10 +21,11 @@ const AddBook = () => {
     try {
       const response = await axios.post('http://localhost:4000/api/books', book);
       console.log(response.data);
-      
+      alert('Book added successfuly');
       setBook({ title: '', author: '', year: '', genre: '', poster: '' });
     } catch (error) {
       console.error('Error adding book:', error);
+      alert('Failed to add book.');
     }
   };
 
