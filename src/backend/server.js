@@ -42,6 +42,15 @@ const bookSchema = new mongoose.Schema({
     }
   });
 
+  app.get('/api/books', async (req, res) => {
+    try {
+      const books = await Book.find();
+      res.status(200).json({ books });
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving books', error });
+    }
+  });
+  
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

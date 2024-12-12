@@ -1,10 +1,13 @@
-import React from 'react';
+const BookItem = (props) => {
+  const { title, author, year } = props.myBook;
 
-const BookItem = () => {
   return (
     <div>
-      <h1>Home Page</h1>
-      <p>Welcome to the Book App!</p>
+      <h4>{title}</h4>
+      <p>
+        <strong>Author:</strong> {author} <br />
+        <strong>Year:</strong> {year}
+      </p>
     </div>
   );
 };
