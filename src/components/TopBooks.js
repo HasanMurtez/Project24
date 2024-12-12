@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 const TopBooks = () => {
-  // Hardcoded data for top 10 books
   const [books, setBooks] = useState([
     {
         id: 1,
@@ -118,7 +117,7 @@ const TopBooks = () => {
       },
   ]);
 
-  // Toggle Read/Not Read
+  
   const toggleReadStatus = (id) => {
     const updatedBooks = books.map((book) =>
       book.id === id ? { ...book, isRead: !book.isRead } : book
@@ -137,8 +136,8 @@ const TopBooks = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="mt-4">Top 10 Books</h1>
+      <div className="container">
+      <h1 className="mt-4">Top 10 read Books In The World</h1>
       <div className="row">
         {books.map((book) => (
           <div className="col-md-4" key={book.id}>
@@ -186,7 +185,7 @@ const TopBooks = () => {
                     <strong>Reviews:</strong>
                     <ul>
                       {book.reviews.map((review, index) => (
-                        <li key={index}>{review}</li>
+                       <li key={index}>{review}</li>
                       ))}
                     </ul>
                   </div>
