@@ -155,7 +155,7 @@ const TopBooks = () => {
           type="text"
           placeholder="Search by title, author, or genre..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchTerm(e.target.value)}// Change searchTerm whenever the user types
         />
       </Form>
 

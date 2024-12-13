@@ -16,9 +16,11 @@ const AddBook = () => {
     setBook({ ...book, [e.target.name]: e.target.value });
   };
 
+  // handle form submission to add a new book
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();// prevent the page from refreshing
     try {
+       //Send book data to the server
       const response = await axios.post('http://localhost:4000/api/books', book);
       console.log(response.data);
       alert('Book added successfuly');

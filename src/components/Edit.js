@@ -19,7 +19,7 @@ const Edit = () => {
   const [error, setError] = useState('');
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/book/${id}`)
+      .get(`http://localhost:4000/api/book/${id}`)// get request to fetch book details by Id
       .then((response) => {
         setBook(response.data);
       })
@@ -29,18 +29,19 @@ const Edit = () => {
       });
   }, [id]);
 
+   // Handle changes
   const handleChange = (e) => {
-    setBook({ ...book, [e.target.name]: e.target.value });
+    setBook({ ...book, [e.target.name]: e.target.value }); // Update
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:4000/api/book/${id}`, book)
+      .put(`http://localhost:4000/api/book/${id}`, book) // put request to update the book
       .then((response) => {
         console.log(response.data);
         alert('Book updated successfully');
-        navigate('/view');
+        navigate('/view'); 
       })
       .catch((error) => {
         console.error('Error updating book:', error);

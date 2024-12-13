@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const mongoose = require('mongoose');
+//Connect to MongoDB 
 mongoose.connect('mongodb+srv://g00419888:admin@cluster0.xbtqx.mongodb.net/BookDB', {});
 
 
@@ -30,7 +31,7 @@ const bookSchema = new mongoose.Schema({
 
 const Book = mongoose.model('Book', bookSchema);
 
-// Add a book
+// // Add a new book to the database
 app.post('/api/books', async (req, res) => {
   const { title, author, year, genre, poster } = req.body;
   try {
@@ -52,9 +53,10 @@ app.get('/api/books', async (req, res) => {
   }
 });
 
+//Retrieve a single book by ID
 app.get('/api/book/:id', async (req, res) => {
   try {
-    const book = await Book.findById(req.params.id);
+    const book = await Book.findById(req.params.id); //Fetch a book using its ID
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
@@ -64,7 +66,7 @@ app.get('/api/book/:id', async (req, res) => {
   }
 });
 
-// Update a book
+// Update a book by id
 app.put('/api/book/:id', async (req, res) => {
   try {
     const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -77,9 +79,10 @@ app.put('/api/book/:id', async (req, res) => {
   }
 });
 
+// delete book
 app.delete('/api/book/:id', async (req, res) => {
     try {
-      const deletedBook = await Book.findByIdAndDelete(req.params.id);
+      const deletedBook = await Book.findByIdAndDelete(req.params.id);// Remove book from the database
       if (!deletedBook) {
         return res.status(404).json({ message: 'Book not found' });
       }

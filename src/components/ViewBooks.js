@@ -6,17 +6,19 @@ const ViewBooks = () => {
 
   const [books, setBooks] = useState([]);
 
+  // fetch books from the server
   const ReloadData = () => {
     axios.get('http://localhost:4000/api/books')
       .then((response) => {
         console.log(response.data);
-        setBooks(response.data.books); 
+        setBooks(response.data.books); //update the books state with fetched data
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  //fetch books when the component loads
   useEffect(() => {
     ReloadData(); 
   }, []);

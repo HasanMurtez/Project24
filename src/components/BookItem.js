@@ -3,9 +3,13 @@ import axios from "axios";
 
 const BookItem = (props) => {
   const { title, author, year, genre, poster, _id } = props.myBook;
-
+  
+  //Handle delete
   const handleDelete = () => {
+    //ask user for confirmation
     if (window.confirm(`Are you sure you want to delete "${title}"?`)) {
+      
+      // Send delete request to the server
       axios
         .delete(`http://localhost:4000/api/book/${_id}`)
         .then((response) => {
