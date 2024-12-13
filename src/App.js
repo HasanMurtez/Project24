@@ -6,7 +6,7 @@ import TopBooks from './components/TopBooks';
 import AddBook from './components/AddBook';
 import ViewBooks from './components/ViewBooks';
 import About from './components/About';
-
+import Edit from './components/Edit';
 function App() {
   return (
     <Router>
@@ -16,7 +16,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/add" element={<AddBook />} />
         <Route path="/view" element={<ViewBooks />} />
-        
+        <Route path="/edit/:id" element={<Edit />} />
 
       </Routes>
     </Router>

@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
+
 const BookItem = (props) => {
-  const { title, author, year, genre, poster } = props.myBook;
+  const { title, author, year, genre, poster, _id } = props.myBook; 
+  const bookId = _id || props.myBook.id; 
 
   return (
-    <div style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px' }}>
+    <div style={{ border: "1px solid #ddd", padding: "10px", marginBottom: "10px" }}>
       <h4>{title}</h4>
       <p><strong>Author:</strong> {author}</p>
       <p><strong>Year:</strong> {year}</p>
@@ -14,10 +17,13 @@ const BookItem = (props) => {
           <img
             src={poster}
             alt={`${title} poster`}
-            style={{ maxWidth: '150px', maxHeight: '200px', marginTop: '10px' }}
+            style={{ maxWidth: "150px", maxHeight: "200px", marginTop: "10px" }}
           />
         </div>
       )}
+      <Link to={`/edit/${bookId}`} className="btn btn-primary mt-3">
+        Edit
+      </Link>
     </div>
   );
 };

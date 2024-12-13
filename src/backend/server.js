@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://g00419888:admin@cluster0.xbtqx.mongodb.net/BookDB',{
-})
+});
 
 const bookSchema = new mongoose.Schema({
     title: String,
@@ -26,32 +26,44 @@ const bookSchema = new mongoose.Schema({
     year: String,
     genre: String,
     poster: String,
-  });
+});
   
-  const Book = mongoose.model('Book', bookSchema);
-  
-  // Add a book
-  app.post('/api/books', async (req, res) => {
+const Book = mongoose.model('Book', bookSchema);
+
+// Add a book
+app.post('/api/books', async (req, res) => {
     const { title, author, year, genre, poster } = req.body;
     try {
-      const newBook = new Book({ title, author, year, genre, poster });
-      await newBook.save();
-      res.status(201).json({ message: 'Book added successfully', book: newBook });
+        const newBook = new Book({ title, author, year, genre, poster });
+        await newBook.save();
+        res.status(201).json({ message: 'Book added successfully', book: newBook });
     } catch (error) {
-      res.status(500).json({ message: 'Error adding book', error });
+        res.status(500).json({ message: 'Error adding book', error });
     }
-  });
+});
 
-  app.get('/api/books', async (req, res) => {
+app.get('/api/books', async (req, res) => {
     try {
-      const books = await Book.find();
-      res.status(200).json({ books });
+        const books = await Book.find();
+        res.status(200).json({ books });
     } catch (error) {
-      res.status(500).json({ message: 'Error retrieving books', error });
+        res.status(500).json({ message: 'Error retrieving books', error });
     }
-  });
-  
+});
+app.put('/api/book/:id', async (req, res) => {
+    try {
+        const updatedBook = await Book.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+        res.status(200).json({ message: 'Book updated successfully', book: updatedBook });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating book', error });
+    }
+});
+
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
