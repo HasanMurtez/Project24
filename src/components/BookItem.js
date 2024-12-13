@@ -5,19 +5,20 @@ const BookItem = (props) => {
   const { title, author, year, genre, poster, _id } = props.myBook;
 
   const handleDelete = () => {
-    axios
-      .delete(`http://localhost:4000/api/book/${_id}`)
-      .then((response) => {
-        console.log(response.data);
-        alert("Book deleted successfully!"); 
-        props.Reload();
-      })
-      .catch((error) => {
-        console.error('Error deleting book:', error);
-        alert('Failed to delete book.');
-      });
+    if (window.confirm(`Are you sure you want to delete "${title}"?`)) {
+      axios
+        .delete(`http://localhost:4000/api/book/${_id}`)
+        .then((response) => {
+          console.log(response.data);
+          alert("Book deleted successfully!");
+          props.Reload();
+        })
+        .catch((error) => {
+          console.error('Error deleting book:', error);
+          alert('Failed to delete book.');
+        });
+    }
   };
-
   return (
     <div style={{ border: "1px solid #ddd", padding: "10px", marginBottom: "10px" }}>
       <h4>{title}</h4>
