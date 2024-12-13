@@ -1,8 +1,22 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const BookItem = (props) => {
-  const { title, author, year, genre, poster, _id } = props.myBook; 
-  const bookId = _id || props.myBook.id; 
+  const { title, author, year, genre, poster, _id } = props.myBook;
+
+  const handleDelete = () => {
+    axios
+      .delete(`http://localhost:4000/api/book/${_id}`)
+      .then((response) => {
+        console.log(response.data);
+        alert("Book deleted successfully!"); 
+        props.Reload();
+      })
+      .catch((error) => {
+        console.error('Error deleting book:', error);
+        alert('Failed to delete book.');
+      });
+  };
 
   return (
     <div style={{ border: "1px solid #ddd", padding: "10px", marginBottom: "10px" }}>
@@ -21,9 +35,10 @@ const BookItem = (props) => {
           />
         </div>
       )}
-      <Link to={`/edit/${bookId}`} className="btn btn-primary mt-3">
-        Edit
-      </Link>
+      <div style={{ marginTop: "10px" }}>
+        <Link to={`/edit/${_id}`} className="btn btn-primary">Edit</Link>
+        <button onClick={handleDelete} className="btn btn-danger" style={{ marginLeft: "10px" }}>Delete</button>
+      </div>
     </div>
   );
 };

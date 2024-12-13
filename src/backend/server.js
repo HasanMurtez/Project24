@@ -30,7 +30,7 @@ const bookSchema = new mongoose.Schema({
   
 const Book = mongoose.model('Book', bookSchema);
 
-// Add a book
+
 app.post('/api/books', async (req, res) => {
     const { title, author, year, genre, poster } = req.body;
     try {
@@ -62,6 +62,19 @@ app.put('/api/book/:id', async (req, res) => {
         res.status(500).json({ message: 'Error updating book', error });
     }
 });
+
+app.delete('/api/book/:id', async (req, res) => {
+    try {
+      const deletedBook = await Book.findByIdAndDelete(req.params.id);
+      if (!deletedBook) {
+        return res.status(404).json({ message: 'Book not found' });
+      }
+      res.status(200).json({ message: 'Book deleted successfully', book: deletedBook });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting book', error });
+    }
+  });
+  
 
 // Start the server
 app.listen(port, () => {
