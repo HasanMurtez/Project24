@@ -8,7 +8,7 @@ app.use(cors());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); 
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
@@ -17,50 +17,64 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://g00419888:admin@cluster0.xbtqx.mongodb.net/BookDB',{
-});
+mongoose.connect('mongodb+srv://g00419888:admin@cluster0.xbtqx.mongodb.net/BookDB', {});
+
 
 const bookSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    year: String,
-    genre: String,
-    poster: String,
+  title: String,
+  author: String,
+  year: String,
+  genre: String,
+  poster: String,
 });
-  
+
 const Book = mongoose.model('Book', bookSchema);
 
-
+// Add a book
 app.post('/api/books', async (req, res) => {
-    const { title, author, year, genre, poster } = req.body;
-    try {
-        const newBook = new Book({ title, author, year, genre, poster });
-        await newBook.save();
-        res.status(201).json({ message: 'Book added successfully', book: newBook });
-    } catch (error) {
-        res.status(500).json({ message: 'Error adding book', error });
-    }
+  const { title, author, year, genre, poster } = req.body;
+  try {
+    const newBook = new Book({ title, author, year, genre, poster });
+    await newBook.save();
+    res.status(201).json({ message: 'Book added successfully', book: newBook });
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding book', error });
+  }
 });
 
+// Get all books
 app.get('/api/books', async (req, res) => {
-    try {
-        const books = await Book.find();
-        res.status(200).json({ books });
-    } catch (error) {
-        res.status(500).json({ message: 'Error retrieving books', error });
-    }
+  try {
+    const books = await Book.find();
+    res.status(200).json({ books });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving books', error });
+  }
 });
-app.put('/api/book/:id', async (req, res) => {
-    try {
-        const updatedBook = await Book.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
-        res.status(200).json({ message: 'Book updated successfully', book: updatedBook });
-    } catch (error) {
-        res.status(500).json({ message: 'Error updating book', error });
+
+app.get('/api/book/:id', async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
     }
+    res.status(200).json(book);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving book', error });
+  }
+});
+
+// Update a book
+app.put('/api/book/:id', async (req, res) => {
+  try {
+    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updatedBook) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+    res.status(200).json({ message: 'Book updated successfully', book: updatedBook });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating book', error });
+  }
 });
 
 app.delete('/api/book/:id', async (req, res) => {

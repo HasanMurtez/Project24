@@ -7,6 +7,8 @@ import AddBook from './components/AddBook';
 import ViewBooks from './components/ViewBooks';
 import About from './components/About';
 import Edit from './components/Edit';
+import './App.css';
+
 function App() {
   return (
     <Router>

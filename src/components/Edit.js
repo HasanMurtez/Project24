@@ -16,6 +16,7 @@ const Edit = () => {
     poster: '',
   });
 
+  const [error, setError] = useState('');
   useEffect(() => {
     axios
       .get(`http://localhost:4000/api/book/${id}`)
@@ -24,8 +25,9 @@ const Edit = () => {
       })
       .catch((error) => {
         console.error('Error fetching book:', error);
+        setError('Failed to load book details. Please try again.');
       });
-   }, [id]);
+  }, [id]);
 
   const handleChange = (e) => {
     setBook({ ...book, [e.target.name]: e.target.value });
